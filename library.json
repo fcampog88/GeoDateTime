@@ -1,18 +1,20 @@
 {
     "name": "GeoDateTime",
-    "keywords": "gps, rtc, time",
+    "version": "1.0.0",
+    "keywords": ["gps", "rtc", "time"],
     "description": "Arduino library for interfacing GPS and RTC libraries",
-    "authors":
-    {
-        "name": "Fernando Campo",
-        "email": "fcampog88@gmail.com",
-        "url": ""
-    },
+    "authors": [
+	{
+	    "name": "Fernando Campo",
+	    "email": "fcampog88@gmail.com",
+	    "url": ""
+    	}
+    ],
     "repository":
     {
         "type": "git",
         "url": "https://github.com/fcampog88/GeoDateTime"
     },
-    "frameworks": "arduino",
+    "frameworks": ["arduino"],
     "platforms": "*"
 }
