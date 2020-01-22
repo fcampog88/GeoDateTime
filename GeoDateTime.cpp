@@ -1,5 +1,4 @@
 #include "GeoDateTime.h"
-#include "my_debug.h"
 
 double GPSData_st::_lat = -99.99;
 double GPSData_st::_lng = -99.99;
@@ -7,8 +6,6 @@ double GPSData_st::_alt = -99.99;
 
 uint8_t GPSControl::readGPS(Stream* _serial, int msecs_wt)
 {
-    print_debug(F("[GPSTime] readGPS() - msecs_wt: %d"), msecs_wt);
-    
     String debug_str = "";
     
     while(!_serial->available())
@@ -32,7 +29,6 @@ uint8_t GPSControl::readGPS(Stream* _serial, int msecs_wt)
     
     if (_tinygps.location.age() > 1500 || _tinygps.date.age() > 1500)
     {
-        // print_debug(F("[GPSTime] readGPS(): Possible fix!"));
         return GPS_OUTDATE_MSK;
     }
     
@@ -41,7 +37,6 @@ uint8_t GPSControl::readGPS(Stream* _serial, int msecs_wt)
     time_t t = mk_timestamp(_tinygps.date.year(), _tinygps.date.month(), _tinygps.date.day(), _tinygps.time.hour(), _tinygps.time.minute(), _tinygps.time.second());
     set_time(t);
     
-    print_debug(F("readGPS(): OK!"));
     return GPS_OK_MSK;
 }
 
@@ -61,19 +56,15 @@ time_t GPSControl::mk_timestamp(uint16_t year, uint8_t month, uint8_t day, uint8
 
 void GPSControl::set_time(time_t t)
 {
-    print_debug(F("[GPSControl] set_time() - time: %lu"), t);
     if(t < time(nullptr)-ONE_HOUR || t > time(nullptr)+ONE_HOUR)    // One our difference
         set_system_time(t);
 }
 
 void RTCControl::set_time(time_t t)
 {
-    print_debug(F("[RTCControl] set_time() - Timestamp: %lu"), t);
-    print_debug(F("[RTCControl] set_time() - time(): %lu"), time(nullptr));
     if(t < time(nullptr)-ONE_HOUR || t > time(nullptr)+ONE_HOUR)    // One our difference
     {
         Rtc.SetTime(&t);
         set_system_time(t);
-        print_debug(F("[RTCControl] set_time() - Timestamp: %lu"), time(nullptr));
     }
 }
