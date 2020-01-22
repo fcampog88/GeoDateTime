@@ -1,6 +1,10 @@
 #include "GeoDateTime.h"
 #include "my_debug.h"
 
+double GPSData_st::_lat = -99.99;
+double GPSData_st::_lng = -99.99;
+double GPSData_st::_alt = -99.99;
+
 uint8_t GPSControl::readGPS(Stream* _serial, int msecs_wt)
 {
     print_debug(F("[GPSTime] readGPS() - msecs_wt: %d"), msecs_wt);
@@ -57,8 +61,9 @@ time_t GPSControl::mk_timestamp(uint16_t year, uint8_t month, uint8_t day, uint8
 
 void GPSControl::set_time(time_t t)
 {
-    // print_debug(F("[GPSControl] set_time() - time: %lu"), t);
-    if(t > time(nullptr))   set_system_time(t);
+    print_debug(F("[GPSControl] set_time() - time: %lu"), t);
+    if(t < time(nullptr)-ONE_HOUR || t > time(nullptr)+ONE_HOUR)    // One our difference
+        set_system_time(t);
 }
 
 void RTCControl::set_time(time_t t)

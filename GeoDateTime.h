@@ -29,6 +29,7 @@ struct GPSData_st
     }
     static double _lat, _lng, _alt;
 };
+extern GPSData_st sysGPS;
 
 class GPSControl : public GeoDateTime
 {
